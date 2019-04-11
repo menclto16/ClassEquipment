@@ -1,0 +1,63 @@
+﻿<Window x:Class="ClassEquipment.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClassEquipment"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0">
+            <TextBox x:Name="ClassroomIDInput1"></TextBox>
+            <Button Click="Button_Click_1">Add Classroom</Button>
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="1">
+            <TextBox x:Name="EquipmentNameInput"></TextBox>
+            <TextBox x:Name="ClassroomIDInput2"></TextBox>
+            <TextBox x:Name="ValueInput"></TextBox>
+            <Button Click="Button_Click_2">Add Equipment</Button>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="0">
+            <ListView x:Name="ClassroomList" ItemsSource="{Binding classroomCollection}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="ClassroomID" DisplayMemberBinding="{Binding ClassroomID}" />
+                        <GridViewColumn Header="Delete">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Click="Button_Click_3" DataContext="{Binding ClassroomID}">Delete</Button>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <ListView x:Name="EquipmentList" ItemsSource="{Binding equipment}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Equipment" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Value" DisplayMemberBinding="{Binding Value}" />
+                        <GridViewColumn Header="ClassroomID" DisplayMemberBinding="{Binding ClassroomID}" />
+                        <GridViewColumn Header="Delete">    
+                    <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Click="Button_Click_4" DataContext="{Binding ID}">Delete</Button>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+    </Grid>
+</Window>
