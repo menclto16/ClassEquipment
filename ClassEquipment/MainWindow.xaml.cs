@@ -31,19 +31,36 @@ namespace ClassEquipment
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            int classroomID = Int32.Parse(ClassroomIDInput1.Text);
-            sqlHandler.AddClassroom(classroomID);
+            if (ClassroomIDInput1.Text != "" & int.TryParse(ClassroomIDInput1.Text, out int n))
+            {
+                int classroomID = Int32.Parse(ClassroomIDInput1.Text);
+                sqlHandler.AddClassroom(classroomID);
 
-            UpdateClassroomList();
+                UpdateClassroomList();
+            }
         }
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            string name = EquipmentNameInput.Text;
-            int value = Int32.Parse(ValueInput.Text);
-            int classroomID = Int32.Parse(ClassroomIDInput2.Text);
-            sqlHandler.AddEquipment(classroomID, name, value);
+            
+            if (ValueInput.Text != "" & int.TryParse(ClassroomIDInput2.Text, out int n1) & int.TryParse(ValueInput.Text, out int n2))
+            {
+                string name = EquipmentNameInput.Text;
+                int value = Int32.Parse(ValueInput.Text);
+                int classroomID = Int32.Parse(ClassroomIDInput2.Text);
 
-            UpdateEquipmentList();
+                if (EditPlaceholder.Text != null)
+                {
+                    int id = Int32.Parse((string)EditPlaceholder.Text);
+                    sqlHandler.UpdateEquipment(id, classroomID, name, value);
+
+                    EditPlaceholder.Text = null;
+
+                    EquipmentButton.Content = "Add Equipment";
+                }
+                else sqlHandler.AddEquipment(classroomID, name, value);
+
+                UpdateEquipmentList();
+            }
         }
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
@@ -52,6 +69,7 @@ namespace ClassEquipment
             sqlHandler.DeleteClassroom(id);
 
             UpdateClassroomList();
+            UpdateEquipmentList();
         }
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
@@ -61,10 +79,26 @@ namespace ClassEquipment
 
             UpdateEquipmentList();
         }
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)e.Source;
+            int id = (int)button.DataContext;
+
+            Equipment equipment = sqlHandler.GetEquipmentFromDb(idInput: id)[0];
+
+            EquipmentNameInput.Text = equipment.Name;
+            ClassroomIDInput2.Text = equipment.ClassroomID.ToString();
+            ValueInput.Text = equipment.Value.ToString();
+            EditPlaceholder.Text = id.ToString();
+            EquipmentButton.Content = "Edit equipment";
+
+            UpdateEquipmentList();
+        }
         public void UpdateClassroomList()
         {
             List<Classroom> classrooms = sqlHandler.GetClassroomsFromDb();
             ClassroomList.ItemsSource = classrooms;
+            ClassroomIDInput2.ItemsSource = classrooms;
         }
         public void UpdateEquipmentList()
         {

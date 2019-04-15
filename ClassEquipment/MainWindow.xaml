@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ClassEquipment"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -16,21 +17,22 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Column="0">
-            <TextBox x:Name="ClassroomIDInput1"></TextBox>
+            <TextBox x:Name="ClassroomIDInput1" Style="{StaticResource placeHolder}" Tag="Classroom ID..."></TextBox>
             <Button Click="Button_Click_1">Add Classroom</Button>
         </StackPanel>
         <StackPanel Grid.Column="0" Grid.Row="1">
-            <TextBox x:Name="EquipmentNameInput"></TextBox>
-            <TextBox x:Name="ClassroomIDInput2"></TextBox>
-            <TextBox x:Name="ValueInput"></TextBox>
-            <Button Click="Button_Click_2">Add Equipment</Button>
+            <TextBox x:Name="EquipmentNameInput" Style="{StaticResource placeHolder}" Tag="Equipment name..."></TextBox>
+            <ComboBox x:Name="ClassroomIDInput2" DisplayMemberPath="ClassroomID" SelectedValuePath="ClassroomID" Text="Select classroom..." IsEditable="True" IsReadOnly="True"/>
+            <TextBox x:Name="ValueInput" Style="{StaticResource placeHolder}" Tag="Equipment value..."></TextBox>
+            <Button x:Name="EquipmentButton" Click="Button_Click_2">Add Equipment</Button>
+            <TextBlock x:Name="EditPlaceholder"/>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="0">
             <ListView x:Name="ClassroomList" ItemsSource="{Binding classroomCollection}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="ClassroomID" DisplayMemberBinding="{Binding ClassroomID}" />
-                        <GridViewColumn Header="Delete">
+                        <GridViewColumn Width="100" Header="ClassroomID" DisplayMemberBinding="{Binding ClassroomID}" />
+                        <GridViewColumn Width="75" Header="Delete">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Click="Button_Click_3" DataContext="{Binding ClassroomID}">Delete</Button>
@@ -45,13 +47,20 @@
             <ListView x:Name="EquipmentList" ItemsSource="{Binding equipment}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Equipment" DisplayMemberBinding="{Binding Name}" />
-                        <GridViewColumn Header="Value" DisplayMemberBinding="{Binding Value}" />
-                        <GridViewColumn Header="ClassroomID" DisplayMemberBinding="{Binding ClassroomID}" />
-                        <GridViewColumn Header="Delete">    
-                    <GridViewColumn.CellTemplate>
+                        <GridViewColumn Width="100" Header="Equipment" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Width="75" Header="Value" DisplayMemberBinding="{Binding Value}" />
+                        <GridViewColumn Width="75" Header="Classroom ID" DisplayMemberBinding="{Binding ClassroomID}" />
+                        <GridViewColumn Width="50" Header="Delete">
+                            <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Click="Button_Click_4" DataContext="{Binding ID}">Delete</Button>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="40" Header="Edit">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Click="Button_Click_5" DataContext="{Binding ID}">Edit</Button>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
